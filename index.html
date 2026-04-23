@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>API Contract Validator</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./styles.css"/>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="./schematch.svg" alt="Schematch logo" class="logo" />
+      <div class="badge">BETA</div>
+      <h1>API Contract <span>Validator</span></h1>
+      <p class="subtitle">Validates field presence and data types against a JSON schema. Powered by AI debugging.</p>
+    </header>
+
+    <div class="grid">
+      <div class="field">
+        <label>Expected Schema (JSON)</label>
+        <textarea id="schema" placeholder='{
+  "user_id": "number",
+  "email": "string",
+  "status": "string"
+}'></textarea>
+      </div>
+      <div class="field">
+        <label>Actual API Response (JSON)</label>
+        <textarea id="response" placeholder='{
+  "user_id": "123abc",
+  "status": "active"
+}'></textarea>
+      </div>
+    </div>
+
+    <div class="error-banner" id="errorBanner"></div>
+
+    <button class="btn" id="submitBtn" onclick="validate()">
+      <span class="btn-text">Validate Contract</span>
+      <div class="spinner"></div>
+    </button>
+
+    <p class="scope-note">⚠ Validates top-level field presence and primitive types (string, number, boolean).<br>Does not cover nested objects, arrays, enums, or OpenAPI specs.</p>
+    <div class="result" id="result">
+      <div class="result-header">
+        <div class="result-dot"></div>
+        <span id="resultTitle"></span>
+      </div>
+      <div class="result-body" id="resultBody"></div>
+    </div>
+
+    <hr class="divider"/>
+
+    <footer>
+      © 2026 <a href="https://ntemposd.me" target="_blank">ntemposd</a> · Built with <a href="https://n8n.io" target="_blank">n8n</a>.
+    </footer>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
+
+
+
+

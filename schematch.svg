@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="58 0 190 54" width="320" height="80">
+  <defs>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00ff88"/>
+      <stop offset="100%" stop-color="#00ffcc"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- CENTER -->
+  <g transform="translate(160,40)">
+
+    <!-- SHIFT WHOLE LOGO LEFT BY HALF WIDTH -->
+    <g transform="translate(-95,0)">
+
+      <!-- ICON -->
+      <g transform="translate(0,-12)">
+        <path d="M10 2 L4 2 L4 24 L10 24"
+              stroke="#00ff88" stroke-width="2.5" fill="none"
+              stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M18 2 L24 2 L24 24 L18 24"
+              stroke="#00ff88" stroke-width="2.5" fill="none"
+              stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8 13 L12 17 L20 7"
+              stroke="url(#accentGrad)" stroke-width="2.5" fill="none"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+
+      <!-- TEXT -->
+      <text x="34" y="0"
+        font-family="'JetBrains Mono', monospace"
+        font-size="26"
+        font-weight="700"
+        letter-spacing="-0.8"
+        dominant-baseline="middle">
+
+        <tspan fill="#e0e0f0">sche</tspan>
+        <tspan dx="-12" fill="url(#accentGrad)" filter="url(#glow)">match</tspan>
+
+      </text>
+    </g>
+  </g>
+</svg>
