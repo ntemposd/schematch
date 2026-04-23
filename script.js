@@ -14,7 +14,7 @@ function formatAI(text) {
   return text
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/### (.*?)(\n|$)/g, '<strong>$1</strong>\n')
-    .replace(/^- /gm, 'â†’ ');
+    .replace(/^- /gm, '→ ');
 }
 
 async function validate() {
@@ -29,9 +29,11 @@ async function validate() {
     return;
   }
 
-  let schema, response;
-  try { schema = JSON.parse(schemaRaw); } catch(e) { showError('Invalid JSON in Expected Schema: ' + e.message); return; }
-  try { response = JSON.parse(responseRaw); } catch(e) { showError('Invalid JSON in Actual API Response: ' + e.message); return; }
+  try { JSON.parse(schemaRaw); } 
+  catch(e) { showError('Invalid JSON in Expected Schema: ' + e.message); return; }
+  
+  try { JSON.parse(responseRaw); } 
+  catch(e) { showError('Invalid JSON in Actual API Response: ' + e.message); return; }
 
   btn.disabled = true;
   btn.classList.add('loading');
@@ -42,10 +44,14 @@ async function validate() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        'Expected Schema (JSON)': schemaRaw,
-        'Actual API Response (JSON)': responseRaw
+        schema: schemaRaw,
+        response: responseRaw
       })
     });
+
+    if (!res.ok) {
+      throw new Error('Webhook returned ' + res.status);
+    }
 
     const data = await res.json();
     const isValid = data.valid;
@@ -54,8 +60,8 @@ async function validate() {
 
     result.classList.add('visible', isValid ? 'valid' : 'invalid');
     document.getElementById('resultTitle').textContent = isValid
-      ? 'âœ“ Contract Valid â€” Response matches schema'
-      : `âœ— Contract Invalid â€” ${errors.length} error${errors.length > 1 ? 's' : ''} detected`;
+      ? 'Contract Valid — Response matches schema'
+      : `Contract Invalid — ${errors.length} error${errors.length > 1 ? 's' : ''} detected`;
 
     let bodyHTML = '';
 
