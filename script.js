@@ -1,5 +1,10 @@
 ﻿const WEBHOOK = 'https://ntemposd.app.n8n.cloud/webhook/api-validator';
 
+const FIELD_LABELS = {
+  schema: 'Expected Schema',
+  response: 'Actual API Response'
+};
+
 function showError(msg) {
   const banner = document.getElementById('errorBanner');
   banner.textContent = msg;
@@ -10,6 +15,82 @@ function hideError() {
   document.getElementById('errorBanner').classList.remove('visible');
 }
 
+function formatJSON(value) {
+  return JSON.stringify(JSON.parse(value), null, 2);
+}
+
+function updateSubmitState() {
+  const schemaField = document.getElementById('schema');
+  const responseField = document.getElementById('response');
+  const button = document.getElementById('submitBtn');
+  const hasInvalidField = [schemaField, responseField].some(
+    (textarea) => textarea.dataset.jsonValid === 'false'
+  );
+
+  if (!button.classList.contains('loading')) {
+    button.disabled = hasInvalidField;
+  }
+}
+
+function setFieldValidity(textarea, isValid) {
+  textarea.dataset.jsonValid = String(isValid);
+  textarea.setAttribute('aria-invalid', String(!isValid));
+  updateSubmitState();
+}
+
+function validateJSONField(textarea, options = {}) {
+  const { formatIfValid = false, showErrorMessage = false } = options;
+  const raw = textarea.value.trim();
+
+  if (!raw) {
+    setFieldValidity(textarea, true);
+    return true;
+  }
+
+  try {
+    const formatted = formatJSON(raw);
+
+    if (formatIfValid) {
+      textarea.value = formatted;
+    }
+
+    setFieldValidity(textarea, true);
+    hideError();
+    return true;
+  } catch (error) {
+    setFieldValidity(textarea, false);
+
+    if (showErrorMessage) {
+      showError(`Invalid JSON in ${FIELD_LABELS[textarea.id]}: ${error.message}`);
+    }
+
+    return false;
+  }
+}
+
+function attachJSONHandlers(textarea) {
+  textarea.addEventListener('paste', () => {
+    queueMicrotask(() => {
+      validateJSONField(textarea, { formatIfValid: true, showErrorMessage: true });
+    });
+  });
+
+  textarea.addEventListener('blur', () => {
+    validateJSONField(textarea, { formatIfValid: true, showErrorMessage: true });
+  });
+
+  textarea.addEventListener('input', () => {
+    setFieldValidity(textarea, true);
+    hideError();
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  attachJSONHandlers(document.getElementById('schema'));
+  attachJSONHandlers(document.getElementById('response'));
+  updateSubmitState();
+});
+
 function formatAI(text) {
   return text
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -19,8 +100,10 @@ function formatAI(text) {
 
 async function validate() {
   hideError();
-  const schemaRaw = document.getElementById('schema').value.trim();
-  const responseRaw = document.getElementById('response').value.trim();
+  const schemaField = document.getElementById('schema');
+  const responseField = document.getElementById('response');
+  const schemaRaw = schemaField.value.trim();
+  const responseRaw = responseField.value.trim();
   const btn = document.getElementById('submitBtn');
   const result = document.getElementById('result');
 
@@ -29,11 +112,13 @@ async function validate() {
     return;
   }
 
-  try { JSON.parse(schemaRaw); } 
-  catch(e) { showError('Invalid JSON in Expected Schema: ' + e.message); return; }
-  
-  try { JSON.parse(responseRaw); } 
-  catch(e) { showError('Invalid JSON in Actual API Response: ' + e.message); return; }
+  if (!validateJSONField(schemaField, { formatIfValid: true, showErrorMessage: true })) {
+    return;
+  }
+
+  if (!validateJSONField(responseField, { formatIfValid: true, showErrorMessage: true })) {
+    return;
+  }
 
   btn.disabled = true;
   btn.classList.add('loading');

@@ -59,7 +59,7 @@ header {
 .badge {
   display: inline-block;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 0.8125rem;
   color: var(--accent);
   border: 1px solid var(--accent-mid);
   padding: 4px 12px;
@@ -71,7 +71,7 @@ header {
 }
 
 h1 {
-  font-size: clamp(28px, 4vw, 42px); 
+  font-size: clamp(2.125rem, 4.8vw, 3.25rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.1;
@@ -84,9 +84,10 @@ h1 span {
 
 .subtitle {
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 1.0625rem;
   color: var(--muted);
   letter-spacing: 0.05em;
+  line-height: 1.7;
 }
 
 .grid {
@@ -108,7 +109,7 @@ h1 span {
 
 label {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 0.8125rem;
   color: var(--accent);
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -120,8 +121,8 @@ textarea {
   border-radius: 4px;
   color: var(--text);
   font-family: var(--mono);
-  font-size: 12px;
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.85;
   padding: 16px;
   resize: vertical;
   min-height: 200px;
@@ -147,7 +148,7 @@ textarea::placeholder {
   border: none;
   border-radius: 4px;
   font-family: var(--sans);
-  font-size: 15px;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   cursor: pointer;
@@ -208,7 +209,7 @@ textarea::placeholder {
   gap: 12px;
   padding: 16px 20px;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -249,7 +250,7 @@ textarea::placeholder {
 
 .errors-title {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 0.8125rem;
   color: var(--muted);
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -258,7 +259,7 @@ textarea::placeholder {
 
 .error-item {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 0.9375rem;
   color: var(--error);
   padding: 8px 12px;
   background: var(--error-dim);
@@ -275,7 +276,7 @@ textarea::placeholder {
 
 .ai-label {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 0.8125rem;
   color: var(--muted);
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -286,15 +287,15 @@ textarea::placeholder {
 }
 
 .ai-label::before {
-  content: 'â—†';
+  content: '\25C6';
   color: var(--accent);
   font-size: 8px;
 }
 
 .ai-text {
   font-family: var(--mono);
-  font-size: 12px;
-  line-height: 1.8;
+  font-size: 1rem;
+  line-height: 1.9;
   color: var(--text);
   white-space: pre-wrap;
 }
@@ -308,7 +309,7 @@ textarea::placeholder {
   border: 1px solid rgba(255,68,102,0.2);
   border-radius: 4px;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 0.9375rem;
   color: var(--error);
   margin-bottom: 16px;
   animation: fadeUp 0.3s ease;
@@ -320,7 +321,7 @@ footer {
   margin-top: 48px;
   text-align: center;
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 0.9375rem;
   color: var(--muted);
   letter-spacing: 0.08em;
 }
@@ -340,8 +341,8 @@ footer a:hover { text-decoration: underline; }
 .scope-note {
   margin: -16px 0 28px;
   font-family: var(--mono);
-  font-size: 11px;
-  line-height: 1.6;
+  font-size: 0.875rem;
+  line-height: 1.8;
   color: var(--muted);
   text-align: center;
 }
