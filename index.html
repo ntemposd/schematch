@@ -10,11 +10,11 @@
   <meta name="color-scheme" content="dark" />
   <meta name="robots" content="index,follow" />
   <meta name="author" content="ntemposd" />
-  <link rel="canonical" href="https://ntemposd.me/schematch" />
+  <link rel="canonical" href="https://ntemposd.me/schematch/" />
   <meta property="og:title" content="Schematch API Contract Validator" />
   <meta property="og:description" content="Validate API responses against a JSON schema with AI-assisted debugging and instant JSON formatting." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://ntemposd.me/schematch" />
+  <meta property="og:url" content="https://ntemposd.me/schematch/" />
   <meta property="og:image" content="https://ntemposd.me/schematch/og-card.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1200" />
@@ -38,8 +38,20 @@
       <img src="./schematch.svg" alt="Schematch logo" class="logo" />
       <div class="badge">BETA</div>
       <h1>API Contract <span>Validator</span></h1>
-      <p class="subtitle">Validates field presence and data types against a JSON schema.<br>Powered by AI debugging.</p>
+      <p class="subtitle">Validates field presence and data types against a JSON schema.<br>Runs fully in the browser with optional OpenAI diagnosis.</p>
     </header>
+
+    <section class="settings-panel" aria-label="OpenAI settings">
+      <div class="settings-copy">
+        <div class="settings-title">OpenAI API Key</div>
+        <p class="settings-text">Optional. Stored in local browser storage so GitHub Pages can request AI diagnosis directly from OpenAI when validation fails.</p>
+      </div>
+      <div class="settings-controls">
+        <input id="apiKey" class="api-key-input" type="password" placeholder="sk-..." autocomplete="off" spellcheck="false" />
+        <button class="secondary-btn" type="button" onclick="clearSavedKey()">Clear Saved Key</button>
+      </div>
+      <p class="settings-status" id="apiKeyStatus"></p>
+    </section>
 
     <div class="grid">
       <div class="field">
@@ -61,12 +73,18 @@
 
     <div class="error-banner" id="errorBanner"></div>
 
+    <div class="action-row">
+      <button class="secondary-btn" type="button" onclick="loadSamplePayload()">Load Sample Payload</button>
+      <button class="secondary-btn" id="copyResultBtn" type="button" onclick="copyResult()">Copy Result</button>
+      <span class="action-status" id="actionStatus" aria-live="polite"></span>
+    </div>
+
     <button class="btn" id="submitBtn" onclick="validate()">
       <span class="btn-text">Validate Contract</span>
       <div class="spinner"></div>
     </button>
 
-    <p class="scope-note">⚠ Validates top-level field presence and primitive types (string, number, boolean).<br>Does not cover nested objects, arrays, enums, or OpenAPI specs.</p>
+    <p class="scope-note">Validates top-level field presence and type names such as string, number, boolean, object, array, and null.<br>Does not cover nested schema rules, enums, or full OpenAPI specs.</p>
     <div class="result" id="result">
       <div class="result-header">
         <div class="result-dot"></div>
@@ -78,7 +96,7 @@
     <hr class="divider"/>
 
     <footer>
-      © 2026 <a href="https://ntemposd.me" target="_blank">ntemposd</a> · Built with <a href="https://n8n.io" target="_blank">n8n</a>.
+      © 2026 <a href="https://ntemposd.me" target="_blank">ntemposd</a>
     </footer>
   </div>
 

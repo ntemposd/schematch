@@ -97,14 +97,114 @@ h1 span {
   margin-bottom: 16px;
 }
 
+.settings-panel {
+  margin: 0 0 20px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+}
+
+.settings-copy {
+  margin-bottom: 14px;
+}
+
+.settings-title {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.settings-text,
+.settings-status {
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.settings-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.api-key-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  padding: 14px 16px;
+  outline: none;
+}
+
+.api-key-input:focus {
+  border-color: var(--accent-mid);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+.secondary-btn {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0 16px;
+  cursor: pointer;
+}
+
+.secondary-btn:hover {
+  border-color: var(--accent-mid);
+  color: var(--accent);
+}
+
 @media (max-width: 640px) {
   .grid { grid-template-columns: 1fr; }
+  .settings-controls { grid-template-columns: 1fr; }
+  .secondary-btn { min-height: 46px; }
 }
 
 .field {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.action-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.action-status {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+  min-height: 1.2em;
+}
+
+.action-status[data-state='success'] {
+  color: var(--accent);
+}
+
+.action-status[data-state='error'] {
+  color: var(--error);
+}
+
+@media (max-width: 640px) {
+  .action-row { align-items: stretch; }
 }
 
 label {
@@ -301,6 +401,21 @@ textarea::placeholder {
 }
 
 .ai-text strong { color: var(--accent); font-weight: 600; }
+
+.success-copy {
+  color: var(--accent);
+}
+
+.info-callout {
+  font-family: var(--mono);
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  color: var(--muted);
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: rgba(255,255,255,0.02);
+}
 
 .error-banner {
   display: none;
