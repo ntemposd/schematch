@@ -38,13 +38,13 @@
       <img src="./schematch.svg" alt="Schematch logo" class="logo" />
       <div class="badge">BETA</div>
       <h1>API Contract <span>Validator</span></h1>
-      <p class="subtitle">Validates field presence and data types against a JSON schema.<br>Runs fully in the browser with optional OpenAI diagnosis.</p>
+      <p class="subtitle">Makes <strong>field mismatches obvious</strong> before they hit production.<br>Runs fully in the browser with <strong>optional OpenAI diagnosis</strong>.</p>
     </header>
 
     <section class="settings-panel" aria-label="OpenAI settings">
       <div class="settings-copy">
         <div class="settings-title">OpenAI API Key</div>
-        <p class="settings-text">Optional. Stored in local browser storage so GitHub Pages can request AI diagnosis directly from OpenAI when validation fails.</p>
+        <p class="settings-text"><strong>Beta.</strong> Your key is stored in this browser. Use a test key if you want AI diagnosis.</p>
       </div>
       <div class="settings-controls">
         <input id="apiKey" class="api-key-input" type="password" placeholder="sk-..." autocomplete="off" spellcheck="false" />
@@ -84,7 +84,7 @@
       <div class="spinner"></div>
     </button>
 
-    <p class="scope-note">Validates top-level field presence and type names such as string, number, boolean, object, array, and null.<br>Does not cover nested schema rules, enums, or full OpenAPI specs.</p>
+    <p class="scope-note"><strong>Top-level contract check only.</strong> Validates field presence and type names such as string, number, boolean, object, array, and null.<br>Does not cover nested schema rules, enums, or full OpenAPI specs.</p>
     <div class="result" id="result">
       <div class="result-header">
         <div class="result-dot"></div>

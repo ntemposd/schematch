@@ -262,8 +262,8 @@ function syncApiKeyUI() {
 
   if (status) {
     status.textContent = hasKey
-      ? 'Saved locally in this browser. Used only when AI diagnosis is needed.'
-      : 'Optional. Add your OpenAI API key to enable direct AI diagnosis from GitHub Pages.';
+      ? 'Key saved in this browser.'
+      : 'No key saved. Use a test key for AI diagnosis.';
   }
 }
 
