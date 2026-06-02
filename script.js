@@ -1,6 +1,11 @@
 ﻿const OPENAI_API_URL = 'https://api.openai.com/v1/responses';
 const OPENAI_MODEL = 'gpt-4.1-mini';
 const STORAGE_KEY = 'schematch.openai.apiKey';
+const THEME_KEY = 'schematch.theme';
+const THEME_COLORS = {
+  light: '#f4f6fb',
+  dark: '#0a0a0f'
+};
 const SAMPLE_PAYLOAD = {
   schema: {
     user_id: 'number',
@@ -333,7 +338,54 @@ function attachJSONHandlers(textarea) {
   });
 }
 
+
+function getStoredTheme() {
+  const stored = localStorage.getItem(THEME_KEY);
+  return stored === 'light' || stored === 'dark' ? stored : null;
+}
+
+function getPreferredTheme() {
+  const stored = getStoredTheme();
+  if (stored) return stored;
+  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+}
+
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', THEME_COLORS[theme]);
+  const logo = document.querySelector('.logo');
+  if (logo) logo.src = theme === 'light' ? './schematch-light.svg' : './schematch.svg';
+  const toggle = document.getElementById('themeToggle');
+  if (toggle) {
+    const nextTheme = theme === 'light' ? 'dark' : 'light';
+    toggle.setAttribute('aria-label', `Switch to ${nextTheme} theme`);
+    toggle.querySelector('.theme-toggle__label').textContent = nextTheme === 'light' ? 'Light' : 'Dark';
+    toggle.querySelector('.theme-toggle__icon').textContent = theme === 'light' ? '☾' : '☀';
+  }
+}
+
+function toggleTheme() {
+  const current = document.documentElement.dataset.theme || getPreferredTheme();
+  const next = current === 'light' ? 'dark' : 'light';
+  localStorage.setItem(THEME_KEY, next);
+  applyTheme(next);
+}
+
+function initTheme() {
+  applyTheme(getPreferredTheme());
+  const toggle = document.getElementById('themeToggle');
+  if (toggle) toggle.addEventListener('click', toggleTheme);
+  if (!getStoredTheme()) {
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (event) => {
+      if (getStoredTheme()) return;
+      applyTheme(event.matches ? 'light' : 'dark');
+    });
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
   attachJSONHandlers(document.getElementById('schema'));
   attachJSONHandlers(document.getElementById('response'));
   const apiKeyField = document.getElementById('apiKey');
