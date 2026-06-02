@@ -7,7 +7,19 @@
   <meta name="description" content="Validate API responses against a JSON schema with readable AI-assisted diagnostics and fast client-side JSON checks." />
   <meta name="application-name" content="Schematch" />
   <meta name="theme-color" content="#0a0a0f" />
-  <meta name="color-scheme" content="dark" />
+  <meta name="color-scheme" content="dark light" />
+  <script>
+    (function () {
+      var key = 'schematch.theme';
+      var stored = localStorage.getItem(key);
+      var theme = (stored === 'light' || stored === 'dark')
+        ? stored
+        : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = theme;
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', theme === 'light' ? '#f4f6fb' : '#0a0a0f');
+    })();
+  </script>
   <meta name="robots" content="index,follow" />
   <meta name="author" content="ntemposd" />
   <link rel="canonical" href="https://ntemposd.me/schematch/" />
@@ -36,8 +48,14 @@
 </head>
 <body>
   <div class="container">
+    <div class="top-bar">
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch to light theme">
+        <span class="theme-toggle__icon" aria-hidden="true">☀</span>
+        <span class="theme-toggle__label">Light</span>
+      </button>
+    </div>
     <header>
-      <img src="./schematch.svg" alt="Schematch logo" class="logo" />
+      <img src="./schematch.svg" alt="Schematch logo" class="logo" width="320" height="80" />
       <div class="badge">BETA</div>
       <h1>API Contract <span>Validator</span></h1>
       <p class="subtitle">Makes <strong>field mismatches obvious</strong> before they hit production.<br>Runs fully in the browser with <strong>optional OpenAI diagnosis</strong>.</p>
