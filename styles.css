@@ -15,8 +15,8 @@
   --text: #e0e0f0;
   --muted: #6d6d84;
   --text-soft: #b9b9ca;
-  --mono: 'JetBrains Mono', monospace;
-  --sans: 'Syne', sans-serif;
+  --mono: 'JetBrains Mono', 'JetBrains Mono Fallback', monospace;
+  --sans: 'Syne', 'Syne Fallback', sans-serif;
 }
 
 body {
